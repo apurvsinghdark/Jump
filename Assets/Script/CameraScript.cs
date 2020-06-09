@@ -1,0 +1,44 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraScript : MonoBehaviour
+{
+    private Transform player;
+
+    private float damping = 0.5f;
+    private float height = 10f;
+
+    private Vector3 startPos;
+
+    private bool can_Follow;
+
+    void Start()
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        startPos = transform.position;
+        can_Follow = true;
+    }
+
+    void Update()
+    {
+        Follow();
+    }
+
+    public bool CanFollow
+        {
+        get { return can_Follow; }
+
+        set { can_Follow = value; }
+
+        }
+    void Follow()
+    {
+        if(can_Follow)
+        {
+            transform.position = Vector3.Lerp(transform.position, 
+                                    new Vector3(player.position.x + 10f, player.position.y + height,
+                                    player.position.z - 10f), Time.deltaTime * damping);
+        }
+    }   
+}
